@@ -1,8 +1,15 @@
-const amount = 6;
+// Global -- No Windosw!!
+// __dirname - Path to current directory
 
-if (amount < 10) {
-  console.log("Small number");
-} else {
-  console.log("Large number");
-}
-console.log(`Hey it's my first node app!`);
+// __filename - file name
+
+// require - function to use modules (CommonJS)
+
+// module - info about current module (file)
+// process - info about env where the program is being executed
+
+console.log(__dirname);
+console.log(__filename);
+setInterval(() => {
+  console.log("Hello, World!");
+}, 1000);
