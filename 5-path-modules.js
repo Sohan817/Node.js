@@ -4,7 +4,7 @@ const path = require("path");
 console.log(path.sep);
 
 //join paths
-const filePath = path.join("/content", "subfolder", "test.txt");
+const filePath = path.join("/Path_Module", "subfolder", "test.txt");
 
 console.log(filePath);
 
@@ -13,5 +13,10 @@ const base = path.basename(filePath);
 console.log(base);
 
 //absolute path
-const absolute = path.resolve(__dirname, "content", "subfolder", "test.txt");
+const absolute = path.resolve(
+  __dirname,
+  "Path_Module",
+  "subfolder",
+  "test.txt",
+);
 console.log(absolute);
