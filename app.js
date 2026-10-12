@@ -1,17 +1,20 @@
-const http = require("http");
+//npm - global command, comes with node
+//npm --version
 
-const server = http.createServer((req, res) => {
-  if (req.url === "/") {
-    res.end("Welcome to the server");
-  } else if (req.url === "/about") {
-    res.end("Welcome to the about page");
-  } else {
-    res.end(`
-    <h1>Oops!</h1>
-    <p>We can't seem to find the page you are looking for</p>
-    <a href="/">Back Home</a>
-    `);
-  }
-});
+//local dependency - use it only in this particular project
 
-server.listen(5000);
+//npm i <packageName>
+
+//global dependency - use it in any project
+//npm install -g <packageName>
+
+//package.json - manifest file (stores important info about project/package)
+//manual approach (create package.json in the root, create properties etc)
+//npm init (step by step, press enter to skip)
+//npm init -y (everything default)
+
+const loadash = require("lodash");
+
+const items = [1, [2, [3, [4]]]];
+const newItems = loadash.flattenDeep(items);
+console.log(newItems);
