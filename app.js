@@ -1,26 +1,17 @@
 const express = require("express");
 
+const path = require("path");
+
 const app = express();
 
-//const app = require("express")();
+app.use(express.static("./Express.js/navbar-app"));
 
-app.listen(5000, () => {
-  console.log("Server listenting at 5000....");
-});
-
-//app.get()
 app.get("/", (req, res) => {
-  console.log("User hit the home page..");
-  res.status(200).send("Home Page");
+  res.sendFile(path.resolve(__dirname, "./Express.js/navbar-app/index.html"));
 });
-app.get("/about", (req, res) => {
-  console.log("User hit the About page..");
-  res.status(200).send("About Page");
-});
-
-//app.all(),responsible for any url
-
 app.all("/*splat", (req, res) => {
-  console.log("User hit dummy link..");
-  res.status(404).send("<h1>Resource not found</h1>");
+  res.send("<h1>Resource not found</h1>");
+});
+app.listen(5000, () => {
+  console.log("Server listening at 5000....");
 });
