@@ -1,17 +1,13 @@
 const express = require("express");
 
-const path = require("path");
-
 const app = express();
 
-app.use(express.static("./Express.js/navbar-app"));
+const { products } = require("./Express.js/data");
 
-app.get("/", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./Express.js/navbar-app/index.html"));
+app.get("/", (request, response) => {
+  response.json(products);
 });
-app.all("/*splat", (req, res) => {
-  res.send("<h1>Resource not found</h1>");
-});
+
 app.listen(5000, () => {
-  console.log("Server listening at 5000....");
+  console.log("Server is listening at port 5000.....");
 });
