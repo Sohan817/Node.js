@@ -1,25 +1,28 @@
 const express = require("express");
 
+const logger = require("./Express.js/middleware/logger");
+
 const app = express();
 
 // request => middleware => response
 
-//Middleware
-const logger = (req, res, next) => {
-  const method = req.method;
-  const url = req.url;
-  const time = new Date().getFullYear();
-  console.log(method, url, time);
-  next();
-};
-
+//app.use(logger);
+app.use("/api", logger);
 //Reference logger function in the route handler as middleware
-app.get("/", logger, (req, res) => {
+app.get("/", (req, res) => {
   res.send("Home");
 });
 
-app.get("/about", logger, (req, res) => {
+app.get("/about", (req, res) => {
   res.send("About");
+});
+
+app.get("/api/products", (req, res) => {
+  res.send("Products");
+});
+
+app.get("/api/items", (req, res) => {
+  res.send("Items");
 });
 
 app.listen(5000, () => {
