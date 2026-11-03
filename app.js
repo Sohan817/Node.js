@@ -1,13 +1,15 @@
 const express = require("express");
 
 const logger = require("./Express.js/middleware/logger");
+const authorize = require("./Express.js/middleware/authorize");
 
 const app = express();
 
 // request => middleware => response
 
-//app.use(logger);
-app.use("/api", logger);
+//app.use([logger, authorize]); //This will apply the logger and authorize middleware to all routes
+//app.use("/api", logger);
+
 //Reference logger function in the route handler as middleware
 app.get("/", (req, res) => {
   res.send("Home");
@@ -21,7 +23,10 @@ app.get("/api/products", (req, res) => {
   res.send("Products");
 });
 
-app.get("/api/items", (req, res) => {
+//Apply logger and authorize middleware to this specific route
+app.get("/api/items", [logger, authorize], (req, res) => {
+  // console.log(userInfo);
+  console.log(req.user);
   res.send("Items");
 });
 
