@@ -1,42 +1,38 @@
 const express = require("express");
-
-const logger = require("./Express.js/middleware/logger");
-const authorize = require("./Express.js/middleware/authorize");
-const morgan = require("morgan");
-
 const app = express();
 
-//Third party middleware
-app.use(morgan("tiny"));
+let { people } = require("./Express.js/data");
 
-//Our own middleware/express middleware/third party middleware
+app.use(express.static("./Express.js/methods-public"));
 
-// request => middleware => response
+app.use(express.urlencoded({ extended: false }));
 
-//app.use([logger, authorize]); //This will apply the logger and authorize middleware to all routes
-//app.use("/api", logger);
+//Perse json
+app.use(express.json());
 
-//Express static middleware to serve static files
-//app.use(express.static("./Express.js/navbar-app"));
-
-//Reference logger function in the route handler as middleware
-app.get("/", (req, res) => {
-  res.send("Home");
+app.get("/api/people", (req, res) => {
+  res.status(200).json({ success: true, data: people });
 });
 
-app.get("/about", (req, res) => {
-  res.send("About");
+//HTML form
+app.post("/login", (req, res) => {
+  const { name } = req.body;
+  if (name) {
+    res.send(`Welcome ${name}`);
+  } else {
+    res.status(404).send("Please provide name value");
+  }
 });
 
-app.get("/api/products", (req, res) => {
-  res.send("Products");
-});
-
-//Apply logger and authorize middleware to this specific route
-app.get("/api/items", (req, res) => {
-  // console.log(userInfo);
-  console.log(req.user);
-  res.send("Items");
+//Javascript post
+app.post("/api/people", (req, res) => {
+  const { name } = req.body;
+  if (!name) {
+    res
+      .status(401)
+      .json({ success: false, message: "Please privide name value" });
+  }
+  res.status(200).json({ success: true, person: name });
 });
 
 app.listen(5000, () => {
