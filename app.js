@@ -35,6 +35,17 @@ app.post("/api/people", (req, res) => {
   res.status(200).json({ success: true, person: name });
 });
 
+//Javascript post
+app.post("/api/postman/people", (req, res) => {
+  const { name } = req.body;
+  if (!name) {
+    res
+      .status(401)
+      .json({ success: false, message: "Please privide name value" });
+  }
+  res.status(200).json({ data: [...people, name] });
+});
+
 app.listen(5000, () => {
   console.log("Server is running on port 5000");
 });
