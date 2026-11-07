@@ -35,7 +35,7 @@ app.post("/api/people", (req, res) => {
   res.status(200).json({ success: true, person: name });
 });
 
-//Javascript post
+//Postman post
 app.post("/api/postman/people", (req, res) => {
   const { name } = req.body;
   if (!name) {
@@ -44,6 +44,26 @@ app.post("/api/postman/people", (req, res) => {
       .json({ success: false, message: "Please privide name value" });
   }
   res.status(200).json({ data: [...people, name] });
+});
+
+//PUT method
+app.put("/api/people/:id", (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  const person = people.find((person) => person.id === Number(id));
+  if (!person) {
+    res
+      .status(404)
+      .json({ success: false, message: `No person with id ${id}` });
+  }
+
+  const newPeople = people.map((person) => {
+    if (person.id === Number(id)) {
+      person.name = name;
+    }
+    return person;
+  });
+  res.status(200).json({ success: true, peopleDataset: newPeople });
 });
 
 app.listen(5000, () => {
